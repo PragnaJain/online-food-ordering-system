@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QuickBite UML Class Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5fa;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #432477;
+        }
+
+        .diagram {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+
+<h1>QuickBite - Online Food Ordering System</h1>
+<h3>UML Class Diagram</h3>
+
+<div class="diagram">
+<pre class="mermaid">
+classDiagram
+
+class User {
+    -int userId
+    -String name
+    -String email
+    -String password
+    +login()
+    +register()
+    +logout()
+}
+
+class Customer {
+    -int customerId
+    -String address
+    -String phone
+    +browseMenu()
+    +addToCart()
+    +placeOrder()
+    +trackOrder()
+}
+
+class Admin {
+    -int adminId
+    +manageMenu()
+    +manageOrders()
+    +manageUsers()
+    +viewReports()
+}
+
+class DeliveryPerson {
+    -int deliveryId
+    -String vehicleNo
+    +acceptDelivery()
+    +updateStatus()
+    +deliverOrder()
+}
+
+class Restaurant {
+    -int restaurantId
+    -String name
+    -String location
+    +addMenu()
+    +updateMenu()
+    +viewOrders()
+}
+
+class Food {
+    -int foodId
+    -String name
+    -double price
+    -String category
+    +updateFood()
+    +setPrice()
+}
+
+class Cart {
+    -int cartId
+    -double totalAmount
+    +addItem()
+    +removeItem()
+    +calculateTotal()
+}
+
+class Order {
+    -int orderId
+    -Date orderDate
+    -String status
+    -double totalAmount
+    +placeOrder()
+    +cancelOrder()
+    +getStatus()
+}
+
+class Payment {
+    -int paymentId
+    -double amount
+    -String method
+    -String status
+    +makePayment()
+    +getStatus()
+}
+
+class Delivery {
+    -int deliveryId
+    -String status
+    -Date deliveryDate
+    +updateStatus()
+    +markDelivered()
+}
+
+class Feedback {
+    -int feedbackId
+    -int rating
+    -String comment
+    +submitFeedback()
+}
+
+User <|-- Customer
+User <|-- Admin
+User <|-- DeliveryPerson
+
+Customer "1" --> "1..*" Restaurant : views
+Restaurant "1" --> "1..*" Food : offers
+Customer "1" --> "1" Cart : has
+Cart "1" --> "1..*" Food : contains
+Cart "1" --> "1" Order : generates
+Order "1" --> "1" Payment : processed by
+Order "1" *-- "1" Delivery : assigned to
+DeliveryPerson "1" --> "0..*" Delivery : handles
+Customer "1" --> "0..*" Feedback : gives
+Restaurant "1" --> "0..*" Feedback : receives
+
+</pre>
+</div>
+
+<script>
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'default',
+        themeVariables: {
+            primaryColor: '#dceaff',
+            primaryBorderColor: '#333366',
+            lineColor: '#555555',
+            fontSize: '14px'
+        }
+    });
+</script>
+
+</body>
+</html>
